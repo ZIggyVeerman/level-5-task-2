@@ -8,19 +8,30 @@ import com.example.gamebacklog.model.Game
 
 class GameRepository(context: Context) {
 
-  private val gameDao: GameDao
+  private val gameDao: GameDao?
 
   init {
     val database = GameBacklogRoomDatabase.getDatabase(context)
-    gameDao = database!!.gameDao()
+    gameDao = database?.gameDao()
+  }
+  //TODO: dit kan nooit goed zijn
+  fun getAllGames(): LiveData<Game?>? {
+    return gameDao?.getAllGames()
   }
 
-  fun getGame(): LiveData<Game?>{
-    return gameDao.getGameBacklog()
+  suspend fun insertGame(game: Game) {
+    gameDao?.insertGame(game)
   }
 
   suspend fun updateGameBacklog(game: Game) {
-    gameDao.updateGameBacklog(game)
+    gameDao?.updateGameBacklog(game)
   }
 
+  suspend fun deleteGame(game: Game) {
+    gameDao?.deleteGame(game)
+  }
+
+  suspend fun deleteAllGames() {
+    gameDao?.deleteAllGames()
+  }
 }

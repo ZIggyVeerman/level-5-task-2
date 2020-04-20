@@ -14,9 +14,14 @@
     <androidx.appcompat.widget.Toolbar
       android:id="@+id/toolbar"
       android:layout_width="match_parent"
-      android:layout_height="?attr/actionBarSize"
+      android:layout_height="wrap_content"
       android:background="?attr/colorPrimary"
-      app:popupTheme="@style/AppTheme.PopupOverlay" />
+      android:minHeight="?attr/actionBarSize"
+      android:theme="?attr/actionBarTheme"
+      android:icon="@drawable/ic_delete"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent" />
 
   </com.google.android.material.appbar.AppBarLayout>
 
@@ -28,6 +33,7 @@
     android:layout_height="wrap_content"
     android:layout_gravity="bottom|end"
     android:layout_margin="@dimen/fab_margin"
-    app:srcCompat="@android:drawable/ic_dialog_email" />
+    android:tint="@android:color/white"
+    app:srcCompat="@android:drawable/ic_input_add" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
