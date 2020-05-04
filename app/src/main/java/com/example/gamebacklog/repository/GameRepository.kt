@@ -14,8 +14,7 @@ class GameRepository(context: Context) {
     val database = GameBacklogRoomDatabase.getDatabase(context)
     gameDao = database?.gameDao()
   }
-  //TODO: dit kan nooit goed zijn
-  fun getAllGames(): LiveData<Game?>? {
+  fun getAllGames(): LiveData<List<Game>?>? {
     return gameDao?.getAllGames()
   }
 
