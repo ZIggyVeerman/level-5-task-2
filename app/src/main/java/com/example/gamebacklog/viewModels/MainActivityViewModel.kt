@@ -15,13 +15,13 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
 
     val game = gameRepository.getAllGames()
 
-    fun deleteAllGames(){
+    fun deleteAllGames() {
         mainScope.launch {
             gameRepository.deleteAllGames()
         }
     }
 
-    fun deleteGame(game: Game){
+    fun deleteGame(game: Game) {
         mainScope.launch {
             gameRepository.deleteGame(game)
         }

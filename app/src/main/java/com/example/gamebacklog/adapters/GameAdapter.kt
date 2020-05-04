@@ -7,13 +7,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.gamebacklog.R
 import com.example.gamebacklog.model.Game
 
-class GameAdapter(private val games: List<Game>):
+class GameAdapter(private val games: List<Game>) :
     RecyclerView.Adapter<GameAdapter.ViewHolder>() {
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(game: Game){
+        fun bind(game: Game) {
 
         }
-        
+
     }
 
     /**

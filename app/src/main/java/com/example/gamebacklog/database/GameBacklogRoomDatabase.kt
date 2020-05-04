@@ -18,39 +18,40 @@ import java.util.*
 @TypeConverters(Converters::class)
 abstract class GameBacklogRoomDatabase : RoomDatabase() {
 
-  abstract fun gameDao(): GameDao
+    abstract fun gameDao(): GameDao
 
-  companion object {
-    private const val DATABASE_NAME = "GAMEBACKLOG_DATABASE"
+    companion object {
+        private const val DATABASE_NAME = "GAMEBACKLOG_DATABASE"
 
-    @Volatile
-    private var INSTANCE: GameBacklogRoomDatabase? = null
+        @Volatile
+        private var INSTANCE: GameBacklogRoomDatabase? = null
 
-    fun getDatabase(context: Context): GameBacklogRoomDatabase? {
-      if (INSTANCE == null) {
-        synchronized(GameBacklogRoomDatabase::class.java) {
-          if (INSTANCE == null) {
-            INSTANCE == Room.databaseBuilder(
-              context.applicationContext,
-              GameBacklogRoomDatabase::class.java, DATABASE_NAME
-            )
-              .fallbackToDestructiveMigration()
-              .addCallback(object : RoomDatabase.Callback() {
-                override fun onCreate(db: SupportSQLiteDatabase) {
-                  super.onCreate(db)
-                  INSTANCE?.let { database ->
-                    CoroutineScope(Dispatchers.IO).launch {
-                      database.gameDao().insertGame(Game("HALO", "XBOX", Date()))
+        fun getDatabase(context: Context): GameBacklogRoomDatabase? {
+            if (INSTANCE == null) {
+                synchronized(GameBacklogRoomDatabase::class.java) {
+                    if (INSTANCE == null) {
+                        INSTANCE == Room.databaseBuilder(
+                            context.applicationContext,
+                            GameBacklogRoomDatabase::class.java, DATABASE_NAME
+                        )
+                            .fallbackToDestructiveMigration()
+                            .addCallback(object : RoomDatabase.Callback() {
+                                override fun onCreate(db: SupportSQLiteDatabase) {
+                                    super.onCreate(db)
+                                    INSTANCE?.let { database ->
+                                        CoroutineScope(Dispatchers.IO).launch {
+                                            database.gameDao()
+                                                .insertGame(Game("HALO", "XBOX", Date()))
+                                        }
+                                    }
+                                }
+                            })
+                            .build()
                     }
-                  }
                 }
-              })
-              .build()
-          }
+            }
+            return INSTANCE
         }
-      }
-      return INSTANCE
     }
-  }
 }
 
