@@ -6,11 +6,12 @@ import com.example.gamebacklog.model.Game
 
 @Dao
 interface GameDao {
+
     @Insert
     suspend fun insertGame(game: Game)
 
     @Query("SELECT * FROM games_table")
-    fun getAllGames(): LiveData<List<Game>?>
+    fun getAllGames(): LiveData<List<Game>>
 
     @Update
     suspend fun updateGameBacklog(game: Game)

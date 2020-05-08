@@ -2,6 +2,7 @@ package com.example.gamebacklog.viewModels
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
 import com.example.gamebacklog.model.Game
 import com.example.gamebacklog.repository.GameRepository
 import kotlinx.coroutines.CoroutineScope
@@ -10,19 +11,25 @@ import kotlinx.coroutines.launch
 
 class MainActivityViewModel(application: Application) : AndroidViewModel(application) {
 
+    private val ioScope = CoroutineScope(Dispatchers.IO)
     private val gameRepository = GameRepository(application.applicationContext)
-    private val mainScope = CoroutineScope(Dispatchers.Main)
 
-    val game = gameRepository.getAllGames()
+    val game: LiveData<List<Game>> = gameRepository.getAllGames()
 
     fun deleteAllGames() {
-        mainScope.launch {
+        ioScope.launch {
             gameRepository.deleteAllGames()
         }
     }
 
+    fun insertGame(game: Game) {
+        ioScope.launch {
+            gameRepository.insertGame(game)
+        }
+    }
+
     fun deleteGame(game: Game) {
-        mainScope.launch {
+        ioScope.launch {
             gameRepository.deleteGame(game)
         }
     }
