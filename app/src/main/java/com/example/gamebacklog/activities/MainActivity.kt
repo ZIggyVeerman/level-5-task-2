@@ -16,6 +16,7 @@ import com.example.gamebacklog.R
 import com.example.gamebacklog.adapters.GameAdapter
 import com.example.gamebacklog.model.Game
 import com.example.gamebacklog.viewModels.MainActivityViewModel
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
 
 const val ADD_GAME_REQUEST_CODE = 100
@@ -93,6 +94,19 @@ class MainActivity : AppCompatActivity() {
         startActivityForResult(intent, ADD_GAME_REQUEST_CODE)
     }
 
+    private fun deleteGameBacklog() {
+        val gameListBeforeDelete = ArrayList<Game>()
+        gameListBeforeDelete.addAll(games)
+        mainActivityViewModel.deleteAllGames()
+
+        Snackbar.make(findViewById(R.id.rvGames), DELETEALLGAMES, Snackbar.LENGTH_LONG)
+            .setAction("UNDO") {
+                gameListBeforeDelete.forEach { game ->
+                    mainActivityViewModel.insertGame(game)
+                }
+            }.show()
+    }
+
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.menu_main, menu)
@@ -104,10 +118,14 @@ class MainActivity : AppCompatActivity() {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         return when (item.itemId) {
-            R.drawable.ic_delete -> true
+            R.id.action_delete_game_list-> {
+                deleteGameBacklog()
+                return true
+            }
             else -> super.onOptionsItemSelected(item)
         }
     }
+
     /**
      * Create a touch helper to recognize when a user swipes an item from a recycler view.
      * An ItemTouchHelper enables touch behavior (like swipe and move) on each ViewHolder,
@@ -134,8 +152,21 @@ class MainActivity : AppCompatActivity() {
                 val gameToDelete = games[position]
 
                 mainActivityViewModel.deleteGame(gameToDelete)
+
+                Snackbar.make(
+                    viewHolder.itemView,
+                    (DELETEGAME + gameToDelete.title),
+                    Snackbar.LENGTH_LONG
+                )
+                    .setAction("UNDO") { mainActivityViewModel.insertGame(gameToDelete) }
+                    .show()
             }
         }
         return ItemTouchHelper(callback)
+    }
+
+    companion object {
+        const val DELETEALLGAMES = "Do you really want to remove all the games from this list"
+        const val DELETEGAME = "Do you really want to delete the following game: "
     }
 }

@@ -13,7 +13,6 @@ import kotlinx.android.synthetic.main.activity_add.*
 import kotlinx.android.synthetic.main.content_add.*
 import java.lang.Error
 import java.text.SimpleDateFormat
-import java.time.LocalDate
 import java.util.*
 
 const val NEW_GAME = "NEW_GAME"

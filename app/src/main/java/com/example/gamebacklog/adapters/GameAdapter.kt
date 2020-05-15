@@ -14,7 +14,7 @@ class GameAdapter(private val games: List<Game>) :
         fun bind(game: Game) {
             itemView.tvTitle.text = game.title
             itemView.tvPlatform.text = game.platform
-            itemView.tfReleaseDate.text = game.releaseDate.toString()
+            itemView.tfReleaseDate.text = ("release: " + game.releaseDate.toString())
         }
     }
 
