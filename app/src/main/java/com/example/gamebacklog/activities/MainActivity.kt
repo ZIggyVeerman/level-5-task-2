@@ -22,8 +22,8 @@ const val ADD_GAME_REQUEST_CODE = 100
 const val TAG = "MainActivity"
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var recyclerView: RecyclerView
     private lateinit var games: ArrayList<Game>
+    private lateinit var recyclerView: RecyclerView
     private lateinit var gameAdapter: GameAdapter
     private lateinit var viewManager: RecyclerView.LayoutManager
 
@@ -33,6 +33,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
+
+        fab.setOnClickListener {
+            startAddActivity()
+        }
 
         recyclerView = findViewById(R.id.rvGames)
 
@@ -49,9 +53,7 @@ class MainActivity : AppCompatActivity() {
             layoutManager = viewManager
             adapter = gameAdapter
         }
-        fab.setOnClickListener {
-            startAddActivity()
-        }
+
     }
 
     private fun initViewModel() {
@@ -64,17 +66,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        println("REQCODE$requestCode")
-        println("RESULTCODE$resultCode")
-        println("DATA$data")
         super.onActivityResult(requestCode, resultCode, data)
 
-        println("RESULTCODE$resultCode")
-
-        if (Activity.RESULT_OK == Activity.RESULT_OK) {
+        if (resultCode == Activity.RESULT_OK) {
             when (requestCode) {
                 ADD_GAME_REQUEST_CODE -> {
-                    data?.let {safeData ->
+                    data?.let { safeData ->
                         val game = safeData.getParcelableExtra<Game>(NEW_GAME)
                         println(game)
                         game?.let { saveGame ->

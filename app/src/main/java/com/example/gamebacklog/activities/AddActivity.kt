@@ -24,9 +24,7 @@ class AddActivity : AppCompatActivity() {
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        fab.setOnClickListener {
-            saveGame()
-        }
+        fab.setOnClickListener { saveGame() }
     }
 
     private fun saveGame() {
@@ -51,42 +49,5 @@ class AddActivity : AppCompatActivity() {
         }else{
             Toast.makeText(this, "yoooo", Toast.LENGTH_SHORT).show()
         }
-
-//        if (tifTitle.text == null) {
-//            //toast text met vul title in
-//        } else if (tifPlatform.text == null) {
-//            //toast text met vul title in
-//        } else if (tifDay.text == null || tifMonth.text == null || tifYear.text == null) {
-//            // do stuff
-//        } else {
-//            var date = "${tifDay.text} + ${tifMonth.text} + ${tifYear.text}"
-//
-//            println(date)
-//
-//            addActivityViewModel.insertGame(
-//                Game(
-//                    tifTitle.text.toString(),
-//                    tifPlatform.text.toString(),
-//                    Date()
-//                )
-//            )
-//            tifTitle.text?.clear()
-//            tifPlatform.text?.clear()
-//            tifDay.text?.clear()
-//            tifMonth.text?.clear()
-//            tifYear.text?.clear()
-//        }
-
     }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return try {
-            finish()
-            true
-        } catch (e: Exception) {
-            e.printStackTrace()
-            false
-        }
-    }
-
 }

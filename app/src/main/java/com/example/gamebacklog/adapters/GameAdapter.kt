@@ -12,8 +12,9 @@ class GameAdapter(private val games: List<Game>) :
     RecyclerView.Adapter<GameAdapter.ViewHolder>() {
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(game: Game) {
-            println(game)
-            itemView.gameText.text = game.title
+            itemView.tvTitle.text = game.title
+            itemView.tvPlatform.text = game.platform
+            itemView.tfReleaseDate.text = game.releaseDate.toString()
         }
     }
 

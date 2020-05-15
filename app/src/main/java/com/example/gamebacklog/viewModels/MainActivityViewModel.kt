@@ -11,8 +11,8 @@ import kotlinx.coroutines.launch
 
 class MainActivityViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val ioScope = CoroutineScope(Dispatchers.IO)
     private val gameRepository = GameRepository(application.applicationContext)
+    private val ioScope = CoroutineScope(Dispatchers.IO)
 
     val game: LiveData<List<Game>> = gameRepository.getAllGames()
 

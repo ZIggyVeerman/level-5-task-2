@@ -9,7 +9,7 @@ import com.example.gamebacklog.model.Game
 
 class GameRepository(context: Context) {
 
-    private val gameDao: GameDao?
+    private var gameDao: GameDao?
 
     init {
         val database = GameBacklogRoomDatabase.getDatabase(context)
